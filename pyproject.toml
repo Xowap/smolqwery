@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "smolqwery"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Django-oriented tool to make analytics exports to BigQuery"
 authors = ["Rémy Sanchez <remy.sanchez@hyperthese.net>"]
 license = "WTFPL"
@@ -10,10 +10,10 @@ homepage = "https://github.com/Xowap/smolqwery"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
-python-dateutil = "^2.8.2"
-black = "^22.1.0"
-google-cloud-bigquery = "^2.34.1"
-rich = "^11.2.0"
+python-dateutil = ">=2"
+black = ">=20"
+google-cloud-bigquery = ">=2"
+rich = ">=11"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
