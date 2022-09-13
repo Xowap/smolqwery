@@ -80,8 +80,9 @@ class Migration(migrations.Migration):
     dependencies = {dependencies!r}
 
     coconut = Coconut({[*self.schemas]!r})
-
-    operations = [migrations.RunPython(coconut.forward, coconut.backward)]
+    # Remove migration when running tests to avoid duplicating tables in BQ
+    if not 'test' in sys.argv:
+        operations = [migrations.RunPython(coconut.forward, coconut.backward)]
 """
 
     def generate_django_migration_name(self) -> str:
