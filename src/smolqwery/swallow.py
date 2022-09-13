@@ -3,6 +3,7 @@ from typing import Dict, Iterator, NamedTuple, Optional, Sequence
 
 from black import Mode, TargetVersion, format_str
 from django.apps import apps
+from django.core import mail
 from django.db.migrations.autodetector import MigrationAutodetector
 from django.db.migrations.executor import MigrationExecutor
 from django.db.migrations.loader import MigrationLoader
@@ -202,7 +203,16 @@ class Migration(migrations.Migration):
     def forward(self, *_):
         """
         Runs the migration forwards
+
+        Notes
+        -----
+        We're checking the presence of "outbox" in mail in order to avoid
+        running those migrations during unit testing, which would assuredly
+        crash the whole thing and be incredibly frustrating
         """
+
+        if hasattr(mail, "outbox"):
+            return
 
         self.ensure_dataset()
 
@@ -213,7 +223,16 @@ class Migration(migrations.Migration):
     def backward(self, *_):
         """
         Runs the migration backwards
+
+        Notes
+        -----
+        We're checking the presence of "outbox" in mail in order to avoid
+        running those migrations during unit testing, which would assuredly
+        crash the whole thing and be incredibly frustrating
         """
+
+        if hasattr(mail, "outbox"):
+            return
 
         for schema in self.schemas:
             self.drop_schema(schema)
